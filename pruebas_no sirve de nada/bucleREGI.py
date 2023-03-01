@@ -1,5 +1,5 @@
 import mysql.connector
-from conexion import connect_to_db
+from src.conexion import connect_to_db
 from prettytable import PrettyTable
 
 

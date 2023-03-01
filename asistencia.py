@@ -1,14 +1,14 @@
 import datetime
-from conexion import connect_to_db
-from agregaralumno import Alumno
-from agregarmaestros import Maestro
-from especialidad import Especialidad
-from materia import Materia
-from agregarGrupo import Grupo
-from horario import Horario
-from modulos import Modulo
-from PRUEBAregistroconRC import Asistencia
-from asignarRC import asignarRC
+from src.conexion import connect_to_db
+from src.agregaralumno import Alumno
+from src.agregarmaestros import Maestro
+from src.especialidad import Especialidad
+from src.materia import Materia
+from src.agregarGrupo import Grupo
+from src.horario import Horario
+from src.modulos import Modulo
+from src.PRUEBAregistroconRC import Asistencia
+from src.asignarRC import asignarRC
 
 alumno = Alumno()
 maestro= Maestro()

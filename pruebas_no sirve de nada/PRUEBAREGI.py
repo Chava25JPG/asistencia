@@ -1,5 +1,5 @@
 from datetime import datetime
-from conexion import connect_to_db
+from src.conexion import connect_to_db
 
 conn = connect_to_db()
 

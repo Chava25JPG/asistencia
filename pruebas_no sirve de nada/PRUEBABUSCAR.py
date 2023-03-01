@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from conexion import connect_to_db
+from src.conexion import connect_to_db
 
 class BusquedaRFID:
     def __init__(self):
