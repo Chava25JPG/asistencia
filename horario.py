@@ -1,4 +1,4 @@
-from conexion import connect_to_db 
+from conexion import Conexion
 
 class Horario:
     def __init__(self):
@@ -18,12 +18,12 @@ class Horario:
             if dia in self.dias_semana:
                 break
             else:
-                print("Día inválido. Por favor ingresa un número del 1 al 7.")
+                print("Día inválido. Por favor ingresa un número del 1 al 5.")
         dia_nombre = self.dias_semana[dia]
         materia_id = input("Introduce el id de la materia: ")
         maestro_id = input("Introduce el id de el maestro: ")
         modulo_id = input("introduce el numero de modulo: ")
-        conn = connect_to_db()
+        conn = Conexion.connect_to_db()
         cursor = conn.cursor()
 
         sql = "INSERT INTO horario (id, grupo_id , dia, materia_id, maestro_id, modulo_id) VALUES (%s, %s, %s, %s, %s, %s)"

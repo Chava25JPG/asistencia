@@ -1,5 +1,5 @@
 from curses import nocbreak
-from conexion import connect_to_db
+from conexion import Conexion
 
 class Materia:
     def init(self):
@@ -9,7 +9,7 @@ class Materia:
         id = input("Introduce el id de la materia: ")
         nombre = input("Introduce el nombre de la materia: ")
         
-        conn = connect_to_db()
+        conn = Conexion.connect_to_db()
         cursor = conn.cursor()
         sql = "INSERT INTO materia (id, nombre) VALUES (%s, %s)"
         val = (id, nombre)

@@ -1,7 +1,7 @@
-from conexion import connect_to_db
+from conexion import Conexion
 from PruebaRC import obtener_uid
-
-conn = connect_to_db()
+conexion = Conexion()
+conn = conexion.connect_to_db()
 
 def asignarRC():
     # Pedir al usuario que ingrese el ID del alumno

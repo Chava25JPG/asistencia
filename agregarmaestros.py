@@ -1,4 +1,4 @@
-from conexion import connect_to_db
+from conexion import Conexion
 class Maestro:
         def __init__(self):
             pass
@@ -10,7 +10,7 @@ class Maestro:
             apellidoMaterno = input("Introduce el apellido materno: ")
             RFIDcard = input("Introduce el número de la tarjeta RFID: ")
 
-            conn = connect_to_db()
+            conn = Conexion.connect_to_db()
             cursor = conn.cursor()
             sql = "INSERT INTO maestro (id, nombre, apellidoPaterno, apellidoMaterno, RFIDcard) VALUES (%s, %s, %s, %s, %s)"
             val = (id, nombre, apellidoPaterno, apellidoMaterno, RFIDcard)

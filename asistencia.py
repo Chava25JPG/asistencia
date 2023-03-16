@@ -1,18 +1,22 @@
 import datetime
-from src.conexion import connect_to_db
-from src.agregaralumno import Alumno
-from src.agregarmaestros import Maestro
-from src.especialidad import Especialidad
-from src.materia import Materia
-from src.agregarGrupo import Grupo
-from src.horario import Horario
-from src.modulos import Modulo
-from src.PRUEBAregistroconRC import Asistencia
-from src.asignarRC import asignarRC
+from conexion import Conexion
+from agregaralumno import Alumno
+from agregarmaestros import Maestro
+from especialidad import Especialidad
+from materia import Materia
+from agregarGrupo import Grupo
+from horario import Horario
+from modulos import Modulo
+from PRUEBAregistroconRC import Asistencia
+from asignarRC import asignarRC
+from AsignarRCMA import asignarRCMA
+
+conexion = Conexion()
+conn = conexion.connect_to_db()
 
 alumno = Alumno()
 maestro= Maestro()
-asistenciaa= Asistencia()
+
 especialidad= Especialidad()
 materia= Materia()
 horario = Horario()
@@ -24,7 +28,7 @@ modulo = Modulo()
 class todo:
 
     def registrar_asistencia(alumno_id):
-        conn = connect_to_db()
+        #conn = connect_to_db()
         cur = conn.cursor()
         fecha = datetime.now().date()
         hora = datetime.now().time()
@@ -33,7 +37,7 @@ class todo:
         print("La asistencia del alumno ha sido registrada con éxito.")
 
     def generar_tabla_asistencia(clase_id):
-        conn = connect_to_db()
+        #conn = connect_to_db()
         cur = conn.cursor()
         cur.execute("SELECT alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, asistencia.fecha, asistencia.asistio FROM alumno JOIN asistencia ON alumno.id = asistencia.alumno_id WHERE alumno.clase_id = %s", (clase_id,))
         resultados = cur.fetchall()
@@ -59,6 +63,7 @@ while True:
         print("8. agregar horario")
         print("9. agregar modulos")
         print("10. Asignar Rfid nuevo a alumno")
+        print("11. Asignar Rfid nuevo a maestro")
         print("0. salir")
         opcion = int(input("Seleccione una opción: "))
         todoall= todo()
@@ -67,6 +72,7 @@ while True:
         elif opcion == 2:
             maestro.agregar_maestro()
         elif opcion == 3:
+            asistenciaa = Asistencia()
             asistenciaa.run()
         elif opcion == 4:
             todoall.generar_tabla_asistencia()
@@ -82,6 +88,8 @@ while True:
             modulo.obtener_datos_modulo()
         elif opcion ==10 :
             asignarRC()
+        elif opcion ==11 :
+            asignarRCMA()
         elif opcion == 0:
             print("Saliendo de la aplicación...")
             exit()

@@ -1,15 +1,51 @@
 from prettytable import PrettyTable
 from datetime import datetime, timedelta
-from conexion import connect_to_db
-from PruebaRC import obtener_uid
+from conexion1 import connect_to_db
+#from PruebaRC import obtener_uid
+import smtplib
+from tkinter import ttk
+import tkinter as Tk
+import serial
 
-
-
+ser = serial.Serial('/dev/ttyUSB3', 9600)
+#from email.mime.text import MIMEText
+#from email.mime.text import MIMEApplication
 
 conn = connect_to_db()
 cursor = conn.cursor()
 
+class RC():
+    def obtener_uid(self):
+        global uidTC
+        while True:
+            if ser.in_waiting > 0:
+                uidTC = ser.readline().rstrip().decode('utf-8')
+                print(uidTC)
+                return uidTC
+
 class Asistencia:
+
+    #def enviar_correo(destinatario, asunto, mensaje):
+        # Configurar datos del servidor SMTP
+        #servidor_smtp = 'smtp.gmail.com'
+        #puerto_smtp = 587
+        #correo_origen = 'saseza8@gmail.com' # Cambiar por tu dirección de correo electrónico
+        #contrasena = 'anakhzhnwxumrnmi' # Cambiar por tu contraseña
+
+        # Crear objeto de conexión SMTP y realizar autenticación
+        #server = smtplib.SMTP(servidor_smtp, puerto_smtp)
+        #server.starttls()
+        #server.login(correo_origen, contrasena)
+
+        # Crear mensaje de correo electrónico
+        #correo = f"From: {correo_origen}\nTo: {destinatario}\nSubject: {asunto}\n\n{mensaje}"
+
+        # Enviar correo electrónico
+        #server.sendmail(correo_origen, destinatario, correo)
+
+        # Cerrar conexión SMTP
+        #server.quit()
+
 
     def get_maestro(self, rfid):
         sql_maestro = "SELECT * FROM maestro WHERE RFIDcard = %s"
@@ -40,11 +76,22 @@ class Asistencia:
         conn.commit()
 
 
+        # Obtener correo electrónico del tutor del alumno
+        #cursor.execute("SELECT CorreoTutor FROM alumnos WHERE id = %s", (alumno_id,))
+        #tutor = cursor.fetchone()[0]
+
+        # Enviar correo electrónico al tutor del alumno
+        #destinatario = tutor
+        #asunto = f"Asistencia de {alumno_id} registrada"
+        #mensaje = f"La asistencia de {alumno_id} ha sido registrada el {fecha_actual} a las {hora_actual}."
+        #self.enviar_correo(destinatario, asunto, mensaje)
+
 
     def run(self):
         while True:
             print("Escanea el tag del maestro: ")
-            uidM = obtener_uid()
+            RFFF = RC()
+            uidM = RFFF.obtener_uid()
             rfid = uidM
 
             maestro = self.get_maestro(rfid)
@@ -64,7 +111,7 @@ class Asistencia:
                     # Pedir RFID del alumno para registrar la asistencia
                     while True:
                         print("escanea la tarjeta del alumno")
-                        uidA = obtener_uid()
+                        uidA = RFFF.obtener_uid()
                         rfid_alumno = uidA
                         alumno = self.get_alumno(rfid_alumno)
                         if alumno:
@@ -73,8 +120,11 @@ class Asistencia:
                             materia_id = horario[0][0]
                             objeto.registrar_asistencia(alumno_id, maestro_id, materia_id)
                             print("Alumno",alumno[1] ,"registrado con exito")
+
                         else:
-                            print("El RFID ingresado no corresponde a un alumno. Intenta de nuevo.")
+                            print("El RFID ingresado no corresponde a un alumno, Cerrando clase")
+
+
                             break
                 else:
                     print("El maestro no tiene horario programado para hoy.")
@@ -83,9 +133,9 @@ class Asistencia:
                 if alumno:
                     print("Primero debe accesar un maestro.")
                 else:
-                    print("El RFID ingresado no es válido. Intenta de nuevo.")
+                    print("El TAG ingresado no es válido. Intenta de nuevo.")
 
 objeto = Asistencia()
+objeto.run()
 
-'''asistencia= Asistencia()
-asistencia.run()'''
+#asistencia= Asistencia()

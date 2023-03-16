@@ -1,4 +1,4 @@
-from conexion import connect_to_db
+from conexion import Conexion
 
 class Grupo:
     def init(self):
@@ -9,7 +9,7 @@ class Grupo:
         id = input("introduce el id: ")
         GradoYGrupo = input("Introduce el grado y grupo '0°X'")
         especialidad_id = input("Introduce el id de la especialidad: ")
-        conn = connect_to_db()
+        conn = Conexion.connect_to_db()
         cursor = conn.cursor()
 
         sql = "INSERT INTO grupos (id, GradoYGrupo, especialidad_id) VALUES(%s, %s, %s)"

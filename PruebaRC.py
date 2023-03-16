@@ -1,7 +1,7 @@
 import serial
 
 # Configurar el puerto serial
-ser = serial.Serial('/dev/ttyUSB2', 9600) # Cambia '/dev/ttyUSB2' por el puerto serial de tu Arduino
+ser = serial.Serial('/dev/ttyUSB3', 9600) # Cambia '/dev/ttyUSB2' por el puerto serial de tu Arduino
 
 def obtener_uid():
     while True:
